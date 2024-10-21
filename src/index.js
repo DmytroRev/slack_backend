@@ -5,8 +5,7 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import authRoutes from './routes/authRoutes.js'; // Импортируйте роуты
-
+import authRoutes from './routes/authRoutes.js';
 dotenv.config();
 
 const app = express();
@@ -27,7 +26,7 @@ passport.use(
         {
             clientID: process.env.GOOGLE_CLIENT_ID,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-            callbackURL: "/auth/google/callback"
+            callbackURL: "https://slack-auth-q31c.onrender.com/auth/google/callback"
         },
         (accessToken, refreshToken, profile, done) => {
             return done(null, profile);
