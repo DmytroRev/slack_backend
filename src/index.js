@@ -1,10 +1,9 @@
-// src/index.js
-
 import dotenv from "dotenv";
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { Strategy as GitHubStrategy } from "passport-github2"; // Импортируйте GitHubStrategy
 import authRoutes from './routes/authRoutes.js';
 dotenv.config();
 
@@ -31,6 +30,19 @@ passport.use(
         (accessToken, refreshToken, profile, done) => {
             return done(null, profile);
         }
+    )
+);
+
+passport.use(
+    new GitHubStrategy(
+{
+    clientID: process.env.GITHUB_CLIENT_ID,
+    clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    callbackURL: 'https://slack-auth-q31c.onrender.com/auth/github/callback'
+},
+(accessToken, refreshToken, profile, done) => {
+    return done(null, profile);
+}
     )
 );
 

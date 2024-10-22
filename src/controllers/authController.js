@@ -5,13 +5,30 @@ export const loginWithGoogle = passport.authenticate('google', {
 });
 
 export const googleCallback = (req, res) => {
-    res.redirect('/profile');
+    res.redirect('/profileGoogle');
 };
 
-export const getProfile= (req, res) => {
+export const getProfileGoogle= (req, res) => {
     if(req.isAuthenticated()) {
         res.send(`Hello, ${req.user.displayName}`);
     } else {
         res.redirect("/auth/google");
+    }
+};
+
+
+export const loginWithGithub = passport.authenticate('github', {
+    scope: ['profile', 'email']
+});
+
+export const githubCallback = (req, res) => {
+    res.redirect('/profileGithub');
+};
+
+export const getProfileGithub= (req, res) => {
+    if(req.isAuthenticated()) {
+        res.send(`Hello, ${req.user.displayName}`);
+    } else {
+        res.redirect("/auth/github");
     }
 };
