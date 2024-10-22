@@ -35,14 +35,15 @@ passport.use(
 
 passport.use(
     new GitHubStrategy(
-{
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: 'https://slack-auth-q31c.onrender.com/auth/github/callback'
-},
-(accessToken, refreshToken, profile, done) => {
-    return done(null, profile);
-}
+        {
+            clientID: process.env.GITHUB_CLIENT_ID,
+            clientSecret: process.env.GITHUB_CLIENT_SECRET,
+            callbackURL: 'https://slack-auth-q31c.onrender.com/auth/github/callback'
+        },
+        (accessToken, refreshToken, profile, done) => {
+            console.log('GitHub Profile:', profile);
+            return done(null, profile);
+        }
     )
 );
 

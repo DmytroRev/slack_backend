@@ -8,6 +8,7 @@ import {
   getProfileGithub,
 } from "../controllers/authController.js";
 import {isAuthenticatedGithub, isAuthenticatedGoogle } from "../middleware/middleware.js";
+import passport from "passport";
 
 
 const router = express.Router();
@@ -24,7 +25,10 @@ router.get("/auth/github", (req, res, next) => {
   next();
 }, loginWithGithub);
 
-router.get("/auth/github/callback", githubCallback);
+router.get("/auth/github/callback",
+  passport.authenticate('github', { failureRedirect: '/' }),
+  githubCallback
+);
 
 router.get("/profileGithub", isAuthenticatedGithub, getProfileGithub);
 
