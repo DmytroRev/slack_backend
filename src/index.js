@@ -1,8 +1,6 @@
 import dotenv from "dotenv";
 import express from 'express';
 import session from 'express-session';
-import RedisStore from 'connect-redis'; // Импортируем RedisStore
-import redis from 'redis';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as GitHubStrategy } from "passport-github2"; // Импортируйте GitHubStrategy
@@ -15,14 +13,12 @@ const app = express();
 
 app.use(express.static('src'));
 
-const redisClient = redis.createClient();
+
 
 app.use(session({
-    store: new RedisStore({ client: redisClient }),
-    secret: process.env.SESSION_SECRET || 'QuKLjn8mxo',
+    secret: 'qwerty123',
     resave: false,
-    saveUninitialized: false,
-    cookie: { secure: process.env.NODE_ENV === 'production' }
+    saveUninitialized: true
 }));
 
 app.use(passport.initialize());
