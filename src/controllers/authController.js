@@ -1,16 +1,16 @@
 import passport from "passport";
 
-export const loginWithGoogle = passport.authenticate('google', {
-    scope: ['profile', 'email']
-});
+export const loginWithGoogle = passport.authenticate("google", {
+    scope: ["profile", "email"],
+  });
 
 export const googleCallback = (req, res) => {
-    res.redirect('/profileGoogle');
+    res.redirect('/');
 };
 
-export const getProfileGoogle= (req, res) => {
-    if(req.isAuthenticated()) {
-        res.send(`Hello, ${req.user.displayName}`);
+export const getProfileGoogle = (req, res) => {
+    if (req.isAuthenticated()) {
+        res.redirect('/');
     } else {
         res.redirect("/auth/google");
     }
@@ -22,12 +22,12 @@ export const loginWithGithub = passport.authenticate('github', {
 });
 
 export const githubCallback = (req, res) => {
-    res.redirect('/profileGit');
+    res.redirect('/');
 };
 
 export const getProfileGithub= (req, res) => {
-    if(req.isAuthenticated()) {
-        res.send(`Hello, ${req.user.displayName}`);
+    if (req.isAuthenticated()) {
+        res.redirect('/');
     } else {
         res.redirect("/auth/github");
     }

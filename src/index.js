@@ -3,7 +3,7 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import { Strategy as GitHubStrategy } from "passport-github2"; // Импортируйте GitHubStrategy
+import { Strategy as GitHubStrategy } from "passport-github2";
 import authRoutes from './routes/authRoutes.js';
 dotenv.config();
 
@@ -45,7 +45,6 @@ passport.use(
             callbackURL: 'https://slack-auth-q31c.onrender.com/auth/github/callback'
         },
         (accessToken, refreshToken, profile, done) => {
-            console.log('GitHub Profile:', profile);
             return done(null, profile);
         }
     )
