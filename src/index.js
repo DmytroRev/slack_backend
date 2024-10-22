@@ -59,7 +59,7 @@ passport.deserializeUser((user, done) => {
     done(null, user);
 });
 
-// Используйте роуты
+
 app.use('/', authRoutes);
 
 
