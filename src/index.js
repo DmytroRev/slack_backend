@@ -1,20 +1,28 @@
 import dotenv from "dotenv";
 import express from 'express';
 import session from 'express-session';
+import RedisStore from 'connect-redis'; // Импортируем RedisStore
+import redis from 'redis';
 import passport from 'passport';
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { Strategy as GitHubStrategy } from "passport-github2"; // Импортируйте GitHubStrategy
 import authRoutes from './routes/authRoutes.js';
 dotenv.config();
 
+const PORT = process.env.PORT || 3000;
+
 const app = express();
 
 app.use(express.static('src'));
 
+const redisClient = redis.createClient();
+
 app.use(session({
-    secret: 'qwerty123',
+    store: new RedisStore({ client: redisClient }),
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV === 'production' }
 }));
 
 app.use(passport.initialize());
@@ -58,7 +66,7 @@ passport.deserializeUser((user, done) => {
 // Используйте роуты
 app.use('/', authRoutes);
 
-const PORT = process.env.PORT || 3000;
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
